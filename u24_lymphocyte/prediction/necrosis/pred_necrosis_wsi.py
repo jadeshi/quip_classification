@@ -27,7 +27,7 @@ def load_seg_data(train_folder_list, test_folder_list, APS):
         X_test = np.concatenate((X_test, X_ts));
         y_test = np.concatenate((y_test, y_ts));
 
-    print "Shapes: ", X_train.shape, X_test.shape;
+    print("Shapes: ", X_train.shape, X_test.shape);
     return X_train, y_train.astype(np.int32), image_name_train, X_test, y_test.astype(np.int32), image_name_test;
 
 
@@ -62,7 +62,7 @@ def read_image_list_file(text_file_path):
 def get_img_idx(folder, prefix='image_'):
     file_idx = np.zeros(shape=(40000,), dtype=np.int32);
     id = 0;
-    print folder + '/' + prefix + '*.png';
+    print(folder + '/' + prefix + '*.png');
     for filename in glob.glob(folder + '/' + prefix + '*.png'):
         file_no_part = filename[(filename.rfind('_') + 1):];
         file_idx[id] = int(file_no_part[:-4]);
@@ -77,7 +77,7 @@ def predict_slide(slide_folder, mu, sigma, param_values, output_path, heat_map_o
     list_file_path = slide_folder + '/list.txt';
     img_name_list = [];
     if (os.path.isfile(list_file_path) == False):
-        print "list file not avaible, producing a list file";
+        print("list file not avaible, producing a list file");
         f = open(list_file_path, 'w')
         path_list = glob.glob(slide_folder + '/*.png');
         for img_path in path_list:
@@ -95,14 +95,14 @@ def predict_slide(slide_folder, mu, sigma, param_values, output_path, heat_map_o
     PS = 200;
 
     # Load testing data
-    print ('Load testing data...');
+    print('Load testing data...');
     X_train, y_train, image_name_train, X_test, y_test, image_name_test = load_seg_data([], [slide_folder], APS);
-    print ('Finish loading testing data');
+    print('Finish loading testing data');
 
     # Do prediction
     print ('Do prediction...');
     image_array, groundtruth_array, prediction_array = necrosis_predict(X_test, y_test, mu, sigma, param_values, APS, PS);
-    print "Output shape: image, groundtruth, prediction ", image_array.shape, groundtruth_array.shape, prediction_array.shape;
+    print("Output shape: image, groundtruth, prediction ", image_array.shape, groundtruth_array.shape, prediction_array.shape);
 
     parent_path, slide_name = os.path.split(slide_folder);
     heatmap_path = output_path + '/' + heat_map_out;
