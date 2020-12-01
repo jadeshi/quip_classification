@@ -254,7 +254,7 @@ def necrosis_predict(X_test, Y_test, loaded_mu, loaded_sigma, param_values, load
     # run training  (X_test, y_test, loaed_mu, loaded_sigma, train_func, test_func)
     image_array, groundtruth_array, prediction_array = test_all(X_test, Y_test, mu, sigma, train_func, test_func);
 
-    print "DONE!";
+    print("DONE!");
 
     return image_array, groundtruth_array, prediction_array;
 
